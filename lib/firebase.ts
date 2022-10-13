@@ -6,6 +6,7 @@ import {
   where,
   getDocs,
   limit,
+  Timestamp,
 } from "firebase/firestore";
 import { getStorage, ref } from "firebase/storage";
 import { getAuth, GoogleAuthProvider } from "firebase/auth";
@@ -20,8 +21,8 @@ const firebaseConfig = {
 };
 
 export const app = initializeApp(firebaseConfig);
-// export const storage = getStorage(app);
-// export const storageRef = ref(storage);
+export const storage = getStorage(app);
+export const storageRef = ref(storage);
 export const googleAuthProvider = new GoogleAuthProvider();
 export const auth = getAuth(app);
 export const db = getFirestore(app);
