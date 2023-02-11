@@ -1,14 +1,12 @@
 import { initializeApp } from "firebase/app";
 import {
   getFirestore,
-  collection,
   query,
   where,
+  collection,
   getDocs,
-  limit,
-  Timestamp,
 } from "firebase/firestore";
-import { getStorage, ref } from "firebase/storage";
+import { getStorage } from "firebase/storage";
 import { getAuth, GoogleAuthProvider } from "firebase/auth";
 
 const firebaseConfig = {
@@ -18,11 +16,12 @@ const firebaseConfig = {
   storageBucket: "fireship-nextjs-course-87ee7.appspot.com",
   messagingSenderId: "503601947386",
   appId: "1:503601947386:web:216011d64e2bfb4ef55f43",
+  measurementId: "G-LDPZWP0514",
 };
 
 export const app = initializeApp(firebaseConfig);
 export const storage = getStorage(app);
-export const storageRef = ref(storage);
+// export const storageRef = ref(storage);
 export const googleAuthProvider = new GoogleAuthProvider();
 export const auth = getAuth(app);
 export const db = getFirestore(app);
@@ -32,14 +31,8 @@ export const db = getFirestore(app);
  * @param  {string} username
  */
 export async function getUserWithUsername(username) {
-  const q = query(
-    collection(db, "users"),
-    where("username", "==", username),
-    limit(1)
-  );
-  const querySnapshot = await getDocs(q);
-  const userDoc = querySnapshot.docs[0];
-
+  const q = query(collection(db, "users"), where("username", "==", username));
+  const userDoc = (await getDocs(q)).docs[0];
   return userDoc;
 }
 

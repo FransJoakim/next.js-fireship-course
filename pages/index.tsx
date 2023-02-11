@@ -12,6 +12,7 @@ import {
 import { db, postToJSON } from "../lib/firebase";
 import PostFeed from "../components/PostFeed";
 import Loader from "../components/Loader";
+import Metatags from "../components/Metatags";
 
 // Max post to query per page
 const LIMIT = 1;
@@ -65,6 +66,7 @@ export default function Home(props) {
 
   return (
     <main>
+      <Metatags />
       <PostFeed posts={posts} admin />
 
       {!loading && !postsEnd && (

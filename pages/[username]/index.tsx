@@ -2,7 +2,6 @@ import { db, getUserWithUsername, postToJSON } from "../../lib/firebase";
 import UserProfile from "../../components/UserProfile";
 import PostFeed from "../../components/PostFeed";
 import {
-  getFirestore,
   collection,
   query,
   orderBy,
@@ -15,6 +14,12 @@ export async function getServerSideProps(props) {
   const { username } = props.query;
 
   const userDoc = await getUserWithUsername(username);
+
+  if (!userDoc) {
+    return {
+      notFound: true,
+    };
+  }
 
   // JSON serializable data
   let user = null;
