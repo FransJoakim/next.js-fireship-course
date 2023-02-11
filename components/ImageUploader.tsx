@@ -15,6 +15,8 @@ export default function ImageUploader() {
     const file = Array.from(e.target.files)[0];
     const extension = (file as File).type.split("/")[1];
 
+    console.log("file", file);
+
     // Makes reference to the storage bucket location
     const imageRef = ref(
       storage,
@@ -32,18 +34,18 @@ export default function ImageUploader() {
         100
       ).toFixed(0);
       setProgress(Number(pct));
+
+      // Get downloadURL AFTER task resolves (Note: this is not a native Promise)
+      uploadTask
+        .then((d) => getDownloadURL(uploadTask.snapshot.ref))
+        .then((url) => {
+          setDownloadURL(url);
+          setUploading(false);
+        });
     }),
       (error) => {
         // Handle unsuccessful uploads
         console.error(error);
-      },
-      () => {
-        // Handle successful uploads on complete
-        // For instance, get the download URL: https://firebasestorage.googleapis.com/...
-        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          setDownloadURL(downloadURL);
-          setUploading(false);
-        });
       };
   };
 
