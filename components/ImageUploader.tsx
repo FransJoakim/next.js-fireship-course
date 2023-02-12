@@ -15,8 +15,6 @@ export default function ImageUploader() {
     const file = Array.from(e.target.files)[0];
     const extension = (file as File).type.split("/")[1];
 
-    console.log("file", file);
-
     // Makes reference to the storage bucket location
     const imageRef = ref(
       storage,
